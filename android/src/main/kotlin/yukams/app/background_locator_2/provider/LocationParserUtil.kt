@@ -29,7 +29,7 @@ class LocationParserUtil {
             result[Keys.ARG_SPEED_ACCURACY] = speedAccuracy
             result[Keys.ARG_HEADING] = location.bearing
             result[Keys.ARG_TIME] = location.time.toDouble()
-            result[Keys.ARG_PROVIDER] = location.provider
+            result[Keys.ARG_PROVIDER] = location.provider ?: "unknown" // ✅ NULL SAFETY
             
             return result
         }
@@ -57,6 +57,7 @@ class LocationParserUtil {
             result[Keys.ARG_SPEED_ACCURACY] = speedAccuracy
             result[Keys.ARG_HEADING] = firstLocation.bearing
             result[Keys.ARG_TIME] = firstLocation.time.toDouble()
+            result[Keys.ARG_PROVIDER] = firstLocation.provider ?: "unknown" // ✅ NULL SAFETY
             
             return result
         }
