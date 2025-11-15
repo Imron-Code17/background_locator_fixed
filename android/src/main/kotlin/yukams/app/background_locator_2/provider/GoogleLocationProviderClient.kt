@@ -32,6 +32,7 @@ class GoogleLocationProviderClient(context: Context, override var listener: Loca
 
 private class LocationListener(val listener: LocationUpdateListener?) : LocationCallback() {
     override fun onLocationResult(location: LocationResult) {
+        // ✅ SEKARANG TYPE MATCH: HashMap<String, Any>? vs HashMap<String, Any>?
         listener?.onLocationUpdated(LocationParserUtil.getLocationMapFromLocation(location))
     }
 }

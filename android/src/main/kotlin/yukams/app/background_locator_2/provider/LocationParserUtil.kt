@@ -18,18 +18,20 @@ class LocationParserUtil {
                 isMocked = location.isFromMockProvider
             }
 
-            return hashMapOf(
-                Keys.ARG_IS_MOCKED to isMocked,
-                Keys.ARG_LATITUDE to location.latitude,
-                Keys.ARG_LONGITUDE to location.longitude,
-                Keys.ARG_ACCURACY to location.accuracy,
-                Keys.ARG_ALTITUDE to location.altitude,
-                Keys.ARG_SPEED to location.speed,
-                Keys.ARG_SPEED_ACCURACY to speedAccuracy,
-                Keys.ARG_HEADING to location.bearing,
-                Keys.ARG_TIME to location.time.toDouble(),
-                Keys.ARG_PROVIDER to location.provider
-            )
+            // ✅ EXPLICITLY CREATE HASHMAP WITH STRING, ANY
+            val result = HashMap<String, Any>()
+            result[Keys.ARG_IS_MOCKED] = isMocked
+            result[Keys.ARG_LATITUDE] = location.latitude
+            result[Keys.ARG_LONGITUDE] = location.longitude
+            result[Keys.ARG_ACCURACY] = location.accuracy
+            result[Keys.ARG_ALTITUDE] = location.altitude
+            result[Keys.ARG_SPEED] = location.speed
+            result[Keys.ARG_SPEED_ACCURACY] = speedAccuracy
+            result[Keys.ARG_HEADING] = location.bearing
+            result[Keys.ARG_TIME] = location.time.toDouble()
+            result[Keys.ARG_PROVIDER] = location.provider
+            
+            return result
         }
 
         fun getLocationMapFromLocation(location: LocationResult?): HashMap<String, Any>? {
@@ -44,17 +46,19 @@ class LocationParserUtil {
                 isMocked = firstLocation.isFromMockProvider
             }
 
-            return hashMapOf(
-                Keys.ARG_IS_MOCKED to isMocked,
-                Keys.ARG_LATITUDE to firstLocation.latitude,
-                Keys.ARG_LONGITUDE to firstLocation.longitude,
-                Keys.ARG_ACCURACY to firstLocation.accuracy,
-                Keys.ARG_ALTITUDE to firstLocation.altitude,
-                Keys.ARG_SPEED to firstLocation.speed,
-                Keys.ARG_SPEED_ACCURACY to speedAccuracy,
-                Keys.ARG_HEADING to firstLocation.bearing,
-                Keys.ARG_TIME to firstLocation.time.toDouble()
-            )
+            // ✅ EXPLICITLY CREATE HASHMAP WITH STRING, ANY
+            val result = HashMap<String, Any>()
+            result[Keys.ARG_IS_MOCKED] = isMocked
+            result[Keys.ARG_LATITUDE] = firstLocation.latitude
+            result[Keys.ARG_LONGITUDE] = firstLocation.longitude
+            result[Keys.ARG_ACCURACY] = firstLocation.accuracy
+            result[Keys.ARG_ALTITUDE] = firstLocation.altitude
+            result[Keys.ARG_SPEED] = firstLocation.speed
+            result[Keys.ARG_SPEED_ACCURACY] = speedAccuracy
+            result[Keys.ARG_HEADING] = firstLocation.bearing
+            result[Keys.ARG_TIME] = firstLocation.time.toDouble()
+            
+            return result
         }
     }
 }
