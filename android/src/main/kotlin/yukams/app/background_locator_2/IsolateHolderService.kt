@@ -179,12 +179,12 @@ class IsolateHolderService : MethodChannel.MethodCallHandler, LocationUpdateList
     private fun startHolderService(intent: Intent) {
         Log.e("IsolateHolderService", "startHolderService")
         notificationChannelName =
-            intent.getStringExtra(Keys.SETTINGS_ANDROID_NOTIFICATION_CHANNEL_NAME).toString()
+            intent.getStringExtra(Keys.SETTINGS_ANDROID_NOTIFICATION_CHANNEL_NAME) ?: "Flutter Locator Plugin"
         notificationTitle =
-            intent.getStringExtra(Keys.SETTINGS_ANDROID_NOTIFICATION_TITLE).toString()
-        notificationMsg = intent.getStringExtra(Keys.SETTINGS_ANDROID_NOTIFICATION_MSG).toString()
+            intent.getStringExtra(Keys.SETTINGS_ANDROID_NOTIFICATION_TITLE) ?: "Start Location Tracking"
+        notificationMsg = intent.getStringExtra(Keys.SETTINGS_ANDROID_NOTIFICATION_MSG) ?: "Track location in background"
         notificationBigMsg =
-            intent.getStringExtra(Keys.SETTINGS_ANDROID_NOTIFICATION_BIG_MSG).toString()
+            intent.getStringExtra(Keys.SETTINGS_ANDROID_NOTIFICATION_BIG_MSG) ?: "Background location is on to keep the app up-tp-date with your location. This is required for main features to work properly when the app is not running."
         val iconNameDefault = "ic_launcher"
         var iconName = intent.getStringExtra(Keys.SETTINGS_ANDROID_NOTIFICATION_ICON)
         if (iconName == null || iconName.isEmpty()) {
@@ -233,17 +233,17 @@ class IsolateHolderService : MethodChannel.MethodCallHandler, LocationUpdateList
         Log.e("IsolateHolderService", "updateNotification")
         if (intent.hasExtra(Keys.SETTINGS_ANDROID_NOTIFICATION_TITLE)) {
             notificationTitle =
-                intent.getStringExtra(Keys.SETTINGS_ANDROID_NOTIFICATION_TITLE).toString()
+                intent.getStringExtra(Keys.SETTINGS_ANDROID_NOTIFICATION_TITLE) ?: "Start Location Tracking"
         }
 
         if (intent.hasExtra(Keys.SETTINGS_ANDROID_NOTIFICATION_MSG)) {
             notificationMsg =
-                intent.getStringExtra(Keys.SETTINGS_ANDROID_NOTIFICATION_MSG).toString()
+                intent.getStringExtra(Keys.SETTINGS_ANDROID_NOTIFICATION_MSG) ?: "Track location in background"
         }
 
         if (intent.hasExtra(Keys.SETTINGS_ANDROID_NOTIFICATION_BIG_MSG)) {
             notificationBigMsg =
-                intent.getStringExtra(Keys.SETTINGS_ANDROID_NOTIFICATION_BIG_MSG).toString()
+                intent.getStringExtra(Keys.SETTINGS_ANDROID_NOTIFICATION_BIG_MSG) ?: "Background location is on to keep the app up-tp-date with your location. This is required for main features to work properly when the app is not running."
         }
 
         val notification = getNotification()
@@ -293,7 +293,8 @@ class IsolateHolderService : MethodChannel.MethodCallHandler, LocationUpdateList
         }
     }
 
-    override fun onLocationUpdated(location: HashMap<Any, Any>?) {
+    // ✅ PERBAIKAN: UPDATE PARAMETER TYPE SESUAI INTERFACE BARU
+    override fun onLocationUpdated(location: HashMap<String, Any>?) {
         try {
             context?.let {
                 FlutterInjector.instance().flutterLoader().ensureInitializationComplete(
@@ -314,7 +315,8 @@ class IsolateHolderService : MethodChannel.MethodCallHandler, LocationUpdateList
                         )
                     } as Long
 
-                val result: HashMap<Any, Any> =
+                // ✅ PERBAIKAN: UPDATE TYPE DI RESULT JUGA
+                val result: HashMap<String, Any> =
                     hashMapOf(
                         Keys.ARG_CALLBACK to callback,
                         Keys.ARG_LOCATION to location
@@ -327,7 +329,8 @@ class IsolateHolderService : MethodChannel.MethodCallHandler, LocationUpdateList
         }
     }
 
-    private fun sendLocationEvent(result: HashMap<Any, Any>) {
+    // ✅ PERBAIKAN: UPDATE PARAMETER TYPE DI METHOD INI JUGA
+    private fun sendLocationEvent(result: HashMap<String, Any>) {
         //https://github.com/flutter/plugins/pull/1641
         //https://github.com/flutter/flutter/issues/36059
         //https://github.com/flutter/plugins/pull/1641/commits/4358fbba3327f1fa75bc40df503ca5341fdbb77d
